@@ -7,7 +7,7 @@ pipeline {
         DIR_PATH = "."
         TEST_FILE_PATH = "test_variables.txt"
         IMAGE_NAME = "sum-python"
-        DOCKERHUB_IMAGE = "moubakass2025/sum-python"
+        DOCKERHUB_IMAGE = "moubarakkass99/sum-python"
     }
 
     stages {
