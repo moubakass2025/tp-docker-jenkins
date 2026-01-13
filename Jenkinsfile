@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "=== Construction de l'image Docker ==="
-                bat "docker build -t %IMAGE_NAME% %DIR_PATH%"
+                bat "docker build -t ${IMAGE_NAME} ${DIR_PATH}"
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                 echo "=== Lancement du conteneur Docker ==="
                 script {
                     def output = bat(
-                        script: "docker run -d %IMAGE_NAME%",
+                        script: "docker run -d ${IMAGE_NAME%}",
                         returnStdout: true
                     )
                     def lines = output.split('\n')
@@ -71,8 +71,8 @@ pipeline {
             steps {
                 echo "=== Déploiement vers DockerHub ==="
                 bat "docker login"
-                bat "docker tag %IMAGE_NAME% %DOCKERHUB_IMAGE%"
-                bat "docker push %DOCKERHUB_IMAGE%"
+                bat "docker tag ${IMAGE_NAME} ${DOCKERHUB_IMAGE}"
+                bat "docker push ${DOCKERHUB_IMAGE}"
             }
         }
     }
@@ -80,8 +80,8 @@ pipeline {
     post {
         always {
             echo "=== Nettoyage du conteneur Docker ==="
-            bat "docker stop %CONTAINER_ID% || exit 0"
-            bat "docker rm %CONTAINER_ID% || exit 0"
+            bat "docker stop ${CONTAINER_ID} || exit 0"
+            bat "docker rm ${CONTAINER_ID} || exit 0"
         }
     }
 }
