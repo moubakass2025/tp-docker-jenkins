@@ -69,10 +69,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "=== Déploiement vers DockerHub ==="
-                bat "docker login"
-                bat "docker tag ${IMAGE_NAME} ${DOCKERHUB_IMAGE}"
-                bat "docker push ${DOCKERHUB_IMAGE}"
+                withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
+                    echo "=== Déploiement vers DockerHub ==="
+                    bat "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
+                    bat "docker tag ${IMAGE_NAME} ${DOCKERHUB_IMAGE}"
+                    bat "docker push ${DOCKERHUB_IMAGE}"
+                }
+
             }
         }
     }
