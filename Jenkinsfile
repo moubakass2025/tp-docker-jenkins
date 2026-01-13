@@ -24,7 +24,7 @@ pipeline {
                 echo "=== Lancement du conteneur Docker ==="
                 script {
                     def output = bat(
-                        script: "docker run -d ${IMAGE_NAME%}",
+                        script: "docker run -d ${IMAGE_NAME}",
                         returnStdout: true
                     )
                     def lines = output.split('\n')
